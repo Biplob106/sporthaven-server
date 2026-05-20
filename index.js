@@ -15,7 +15,7 @@ app.use(
   cors({
     origin: [
       'http://localhost:3000',
-      // add deployed frontend URL here before going live
+      'https://sporthaven.vercel.app',
     ],
     credentials: true,
   })
