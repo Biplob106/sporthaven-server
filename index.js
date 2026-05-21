@@ -86,10 +86,6 @@ app.get('/', (req, res) => {
   res.send('SportHaven Server Running');
 });
 
-// ------- Facilities -------
-
-// Public: list with optional search + filter
-// /facilities?search=tennis&types=football,tennis
 app.get('/facilities', async (req, res, next) => {
   try {
     const { facilitiesCollection } = await getCollections();
@@ -167,9 +163,6 @@ app.delete('/facilities/:id', verifyToken, async (req, res, next) => {
   }
 });
 
-// ------- Bookings -------
-
-// Logged-in user's own bookings (ignores query email — uses JWT)
 app.get('/bookings', verifyToken, async (req, res, next) => {
   try {
     const { bookingsCollection } = await getCollections();
@@ -210,7 +203,6 @@ app.post('/bookings', verifyToken, async (req, res, next) => {
   }
 });
 
-// Cancel = PATCH status (preserves history)
 app.patch('/bookings/:id', verifyToken, async (req, res, next) => {
   try {
     const { bookingsCollection } = await getCollections();
@@ -228,7 +220,6 @@ app.patch('/bookings/:id', verifyToken, async (req, res, next) => {
   }
 });
 
-// 404 + error handlers MUST be registered AFTER routes
 app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });
 });
@@ -238,7 +229,6 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ message: err.message || 'Server error' });
 });
 
-// Local dev only — Vercel imports `app` and handles requests itself
 if (require.main === module) {
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
